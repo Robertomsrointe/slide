@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
+
+</head>
+<body>
+
+    
+<style>
+
+.carousel-container {
+    width: 100%;
+    
+    margin-left: auto; /* 🔥 Mueve el carrusel a la derecha */
+    position: relative;
+    overflow: hidden;
+}
+
+/* 📌 SWIPER */
+.swiper {
+    touch-action: none;  /* Asegura que los eventos táctiles no se bloqueen */
+    -ms-touch-action: none; /* Para compatibilidad con navegadores antiguos */
+    width: 100%;
+    overflow: hidden;
+}
+
+/* 📌 Ajusta el Swiper Wrapper */
+.swiper-wrapper {
+    display: flex;
+    transition: transform 0.6s ease-in-out; /* 🔥 Animación suave */
+}
+
+/* 📌 Ajuste de cada slide */
+.swiper-slide {
+    height: 650px; /* 🔥 Ajuste de altura */
+}
+
+/* 📌 En PC (3 tarjetas completas + parte de la 4ª) */
+@media (min-width: 1025px) {
+    .swiper-slide {
+        flex: 0 0 calc((100% - 80px) / 3.2); /* 🔥 3 completas + 1/4 parte de la 4ª */
+    }
+}
+
+/* 📌 En tablet (2 tarjetas completas + parte de la 3ª) */
+@media (max-width: 1024px) {
+    .swiper-slide {
+        flex: 0 0 calc((100% - 20px) / 2.2); /* 🔥 2 completas + parte de la 3ª */
+        height: 450px;
+    }
+}
+
+/* 📌 En móvil (1 tarjeta completa + parte de la 2ª) */
+@media (max-width: 568px) {
+    .swiper-slide {
+        flex: 0 0 calc(100% - 10px); /* 🔥 1 completa + parte de la siguiente */
+        height: 450px;
+    }
+}
+
+
+/* 📌 FLIP BOX */
+.flip-box {
+position: relative;
+width: 100%;
+height: 100%;
+overflow: hidden;
+cursor: pointer;
+perspective: 1000px;
+}
+
+/* 📌 Contenido interno del Flip Box */
+.flip-box-inner {
+position: relative;
+width: 100%;
+height: 100%;
+transition: transform 0.5s ease-in-out;
+transform-style: preserve-3d;
+}
+
+/* 📌 Efecto "Push" */
+.flip-box-front,
+.flip-box-back {
+position: absolute;
+width: 100%;
+height: 100%;
+backface-visibility: hidden;
+border-radius: 25px;
+transition: transform 0.5s ease-in-out;
+}
+
+/* 📌 Estilos para la cara frontal */
+.flip-box-front {
+color: #000000;
+transform: translateY(0);
+font-family: "Montserrat", sans-serif;
+display: flex;
+flex-direction: column;
+justify-content: start;
+overflow: hidden;
+font-family: "Montserrat", sans-serif;
+font-size: 1.1rem;
+font-weight: 500;
+text-transform: uppercase;
+}
+
+.flip-box-front-img{
+    width: 100%;
+    min-height: 90%;
+    background-repeat: no-repeat;
+    background-size:cover ;
+    background-position: right 0% center;
+}
+
+.bg1{
+    background-image:url("https://antoniod154.sg-host.com/wp-content/uploads/2024/10/Rointe-Connect-multiple-installations-1.jpg");
+}
+
+.bg2{
+    background-image:url("https://antoniod154.sg-host.com/wp-content/uploads/2024/10/Rointe-secured-communications-1.jpg");  
+}
+
+.bg3{
+    background-image:url("https://antoniod154.sg-host.com/wp-content/uploads/2025/02/app-paso2.jpg"); 
+}
+
+.bg4{
+    background-image:url("https://antoniod154.sg-host.com/wp-content/uploads/2024/10/Rointe-Connect-Alexa-1.jpg");  
+}
+.bg5{
+    background-image:url("https://antoniod154.sg-host.com/wp-content/uploads/2024/10/Rointe-Connect-automation-1.jpg"); 
+}
+
+.bg6{
+    background-image:url("https://antoniod154.sg-host.com/wp-content/uploads/2024/10/Rointe-Connect-cost-tracking-1.jpg");  
+}
+.bg7{
+    background-image:url("https://antoniod154.sg-host.com/wp-content/uploads/2025/02/AdobeStock_572250352.jpg"); 
+}
+
+.flip-box-front-txt{
+    width: 100%;
+    min-height: 10%;
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    background-color: #fff;
+}
+
+.flip-box-front-txt p{
+    margin: 0 !important;
+}
+
+/* 📌 Estilos para la cara trasera */
+.flip-box-back {
+background: #2B2B2B;
+color: #fff;
+transform: translateY(100%);
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+
+}
+
+.flip-box-back h3{
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 0rem 2rem;
+}
+
+.flip-box-back p{
+    font-family: "Roboto", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0rem 2rem;
+}
+
+/* 📌 Cambio de estado cuando se activa el Flip */
+.flip-box.flipped .flip-box-front {
+transform: translateY(-100%);
+}
+
+.flip-box.flipped .flip-box-back {
+transform: translateY(0);
+}
+
+/* 📌 Flechas de navegación */
+.swiper-button-prev-2,
+.swiper-button-next-2 {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+font-size: 2rem;
+z-index: 20;
+cursor: pointer;
+color: white;
+}
+
+/* 📌 Posicionamiento de las flechas */
+.swiper-button-prev-2 {
+left: 1rem;
+}
+
+.swiper-button-next-2 {
+right: 1rem;
+}
+
+/* 📌 Reducir tamaño de flechas en móviles */
+@media (max-width: 768px) {
+.swiper-button-prev-2,
+.swiper-button-next-2 {
+    font-size: 1.5rem;
+}
+}
+
+/* 🔥 Asegurar que Swiper muestre las flechas por defecto */
+.swiper-button-prev-2::after,
+.swiper-button-next-2::after {
+    font-size: 44px !important; /* Asegura que sean visibles */
+    color: white !important; /* Cambia el color si es necesario */
+    font-weight: bold;
+}
+
+/* 🔥 Alternativa: Usar un icono personalizado si sigue sin funcionar */
+.swiper-button-prev-2::after {
+    font-family: 'Material Icons Round';
+    content: "arrow_back_ios"; /* Icono de flecha izquierda */
+}
+
+.swiper-button-next-2::after {
+    font-family: 'Material Icons Round';
+    content: "arrow_forward_ios"; /* Icono de flecha derecha */
+}
+
+.lottie-container {
+    position: absolute;
+     /* 🔥 Ajusta la distancia del botón prev */
+    top: 10%;
+    transform: translateY(-50%);
+    width: 180px;
+    height: 180px;
+    z-index: 999;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out; /* 🔥 Agrega una animación suave */
+}
+
+/* 🔥 Ocultar Lottie cuando el mouse está sobre el slider */
+.lottie-hidden {
+    opacity: 0;
+}
+
+
+</style>
+<section class="Main">
+
+    <div class="carousel-container">
+        <!-- Swiper Carrusel -->
+        <div class="swiper mySwiper2">
+            <div class="swiper-wrapper">
+
+                <!-- Slide 1 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg1"></div>
+                                <div class="flip-box-front-txt"><p>Gestión múltiple</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Gestiona Multiples instalaciones</h3>
+                                <p>Ahora puedes controlar, desde la misma app, tu hogar, segunda residencia u oficina</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg2"></div>
+                                <div class="flip-box-front-txt"><p>Datos protegidos</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Datos personales protegidos</h3>
+                                <p>Tus datos personales se transmiten de forma segura con encriptación, garantizando integridad, confidencialidad y anonimato.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg3"></div>
+                                <div class="flip-box-front-txt"><p>Emparejamiento rapido</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Emparejamiento rapido y sencillo</h3>
+                                <p>Gracias a la electrónica integrada, te conectas directamente a tu smartphone en segundos, sin pasarelas. Rápido, fácil y seguro.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg4"></div>
+                                <div class="flip-box-front-txt"><p>Control por voz</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Control por voz</h3>
+                                <p>La app Rointe Connect es compatible con Google Assistant y Amazon Alexa, permitiéndote controlar la calefacción con tu voz, estés donde estés.</p></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 5 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg5"></div>
+                                <div class="flip-box-front-txt"><p>automatización por gps</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Automatiza tu calefacción con GPS</h3>
+                                <p>Maneja tu calefacción creando escenarios manuales y/o automáticos, controlados por la geolocalización GPS de tu smartphone.</p></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 6 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg6"></div>
+                                <div class="flip-box-front-txt"><p>Consulta el consumo real</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Consulta el consumo real</h3>
+                                <p>Con el medidor True Real Power, consulta el coste estimado de tu calefacción y fija límites de gasto.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 7 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg7"></div>
+                                <div class="flip-box-front-txt"><p>Revisa tus estadísticas</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Revisa tus estadísticas</h3>
+                                <p>Con la app Rointe Connect, consulta gráficas con datos actuales e históricos de temperatura, consumo y coste.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 1 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg1"></div>
+                                <div class="flip-box-front-txt"><p>Gestión múltiple</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Gestiona Multiples instalaciones</h3>
+                                <p>Ahora puedes controlar, desde la misma app, tu hogar, segunda residencia u oficina</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg2"></div>
+                                <div class="flip-box-front-txt"><p>Datos protegidos</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Datos personales protegidos</h3>
+                                <p>Tus datos personales se transmiten de forma segura con encriptación, garantizando integridad, confidencialidad y anonimato.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg3"></div>
+                                <div class="flip-box-front-txt"><p>Emparejamiento rapido</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Emparejamiento rapido y sencillo</h3>
+                                <p>Gracias a la electrónica integrada, te conectas directamente a tu smartphone en segundos, sin pasarelas. Rápido, fácil y seguro.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg4"></div>
+                                <div class="flip-box-front-txt"><p>Control por voz</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Control por voz</h3>
+                                <p>La app Rointe Connect es compatible con Google Assistant y Amazon Alexa, permitiéndote controlar la calefacción con tu voz, estés donde estés.</p></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 5 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg5"></div>
+                                <div class="flip-box-front-txt"><p>automatización por gps</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Automatiza tu calefacción con GPS</h3>
+                                <p>Maneja tu calefacción creando escenarios manuales y/o automáticos, controlados por la geolocalización GPS de tu smartphone.</p></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 6 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg6"></div>
+                                <div class="flip-box-front-txt"><p>Consulta el consumo real</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Consulta el consumo real</h3>
+                                <p>Con el medidor True Real Power, consulta el coste estimado de tu calefacción y fija límites de gasto.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 7 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg7"></div>
+                                <div class="flip-box-front-txt"><p>Revisa tus estadísticas</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Revisa tus estadísticas</h3>
+                                <p>Con la app Rointe Connect, consulta gráficas con datos actuales e históricos de temperatura, consumo y coste.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+
+            <!-- Botones de navegación -->
+            <div class="swiper-button-prev-2"></div>
+            <div class="lottie-container" id="lottie-animation2"></div>
+            <div class="swiper-button-next-2"></div>
+
+
+ 
+
+            
+        </div>
+    </div>
+
+</section>
+
+
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<script>
+   ddocument.addEventListener("DOMContentLoaded", function () {
+    const sliders = document.querySelectorAll(".swiper");
+
+    sliders.forEach((slider, index) => {
+        const swiper = new Swiper(`.mySwiper${index + 2}`, {
+            slidesPerView: 2.2,
+            slidesPerGroup: 1, // Asegúrate de que el número de slides por grupo sea 1
+            spaceBetween: 40,
+            loop: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: `.swiper-button-next-${index + 2}`,
+                prevEl: `.swiper-button-prev-${index + 2}`,
+            },
+            speed: 600,
+            breakpoints: {
+                // Configuraciones para tamaños de pantalla más grandes
+                1025: { slidesPerView: 3.2, slidesPerGroup: 1, spaceBetween: 40 }, 
+                // Para tabletas, aún moviendo un solo slide
+                768: { slidesPerView: 2.1, slidesPerGroup: 1, spaceBetween: 30 }, 
+                // Para móviles, un solo slide visible
+                480: { slidesPerView: 1.1, slidesPerGroup: 1, spaceBetween: 20 }
+            },
+            // Asegurarte de que el Swiper se mueva solo por un slide a la vez
+            slidesPerView: 1, // Esto asegura que solo un slide sea visible por vez
+        });
+
+        // ✅ Función para hacer que el Flip funcione bien al hacer clic
+        document.querySelectorAll(`.mySwiper${index + 2} .flip-box`).forEach(flipBox => {
+            flipBox.addEventListener("click", function () {
+                flipBox.classList.toggle("flipped");
+            });
+        });
+
+        // ✅ Verificar que el contenedor de Lottie existe antes de cargar la animación
+        const lottieContainer = document.getElementById(`lottie-animation${index + 2}`);
+        if (lottieContainer) {
+            console.log(`✅ Lottie container ${index + 2} encontrado, cargando animación...`);
+
+            const lottieAnimation = lottie.loadAnimation({
+                container: lottieContainer,
+                renderer: "svg",
+                loop: true,
+                autoplay: true,
+                path: "" // Cambiar el path de la animación de Lottie si es necesario
+            });
+
+            console.log(`✅ Lottie ${index + 2} cargado correctamente:`, lottieAnimation);
+
+            // ✅ Ocultar y mostrar Lottie con retardo
+            slider.addEventListener("mouseenter", function () {
+                lottieContainer.style.opacity = "0"; 
+                swiper.autoplay.stop(); 
+            });
+
+            slider.addEventListener("mouseleave", function () {
+                setTimeout(() => {
+                    lottieContainer.style.opacity = "1"; 
+                    swiper.autoplay.start();
+                }, 5000);
+            });
+
+        } else {
+            console.error(`❌ No se encontró el contenedor de Lottie ${index + 2}.`);
+        }
+    });
+});
+
+
+
+
+</script>
+
+
+    
+</body>
+</html>
