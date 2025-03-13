@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
+
+</head>
+<body>
+
+    
+<style>
+
+.carousel-container {
+    width: 100%;
+    
+    margin-left: auto; /* 🔥 Mueve el carrusel a la derecha */
+    position: relative;
+    overflow: hidden;
+}
+
+/* 📌 SWIPER */
+.swiper {
+    width: 100%;
+    overflow: hidden;
+}
+
+/* 📌 Ajusta el Swiper Wrapper */
+.swiper-wrapper {
+    display: flex;
+    transition: transform 0.6s ease-in-out; /* 🔥 Animación suave */
+}
+
+/* 📌 Ajuste de cada slide */
+.swiper-slide {
+    height: 650px; /* 🔥 Ajuste de altura */
+}
+
+/* 📌 En PC (3 tarjetas completas + parte de la 4ª) */
+@media (min-width: 1025px) {
+    .swiper-slide {
+        flex: 0 0 calc((100% - 80px) / 3.2); /* 🔥 3 completas + 1/4 parte de la 4ª */
+    }
+}
+
+/* 📌 En tablet (2 tarjetas completas + parte de la 3ª) */
+@media (max-width: 1024px) {
+    .swiper-slide {
+        flex: 0 0 calc((100% - 20px) / 2.2); /* 🔥 2 completas + parte de la 3ª */
+        height: 450px;
+    }
+}
+
+/* 📌 En móvil (1 tarjeta completa + parte de la 2ª) */
+@media (max-width: 568px) {
+    .swiper-slide {
+        flex: 0 0 calc(100% - 10px); /* 🔥 1 completa + parte de la siguiente */
+        height: 450px;
+    }
+}
+
+
+/* 📌 FLIP BOX */
+.flip-box {
+position: relative;
+width: 100%;
+height: 100%;
+overflow: hidden;
+cursor: pointer;
+perspective: 1000px;
+}
+
+/* 📌 Contenido interno del Flip Box */
+.flip-box-inner {
+position: relative;
+width: 100%;
+height: 100%;
+transition: transform 0.5s ease-in-out;
+transform-style: preserve-3d;
+}
+
+/* 📌 Efecto "Push" */
+.flip-box-front,
+.flip-box-back {
+position: absolute;
+width: 100%;
+height: 100%;
+backface-visibility: hidden;
+border-radius: 25px;
+transition: transform 0.5s ease-in-out;
+}
+
+/* 📌 Estilos para la cara frontal */
+.flip-box-front {
+color: #000000;
+transform: translateY(0);
+font-family: "Montserrat", sans-serif;
+display: flex;
+flex-direction: column;
+justify-content: start;
+overflow: hidden;
+font-family: "Montserrat", sans-serif;
+font-size: 1.1rem;
+font-weight: 500;
+text-transform: uppercase;
+}
+
+.flip-box-front-img{
+    width: 100%;
+    min-height: 90%;
+    background-repeat: no-repeat;
+    background-size:cover ;
+    background-position: right 0% center;
+}
+
+.bg1{
+    background-image:url("https://antoniod154.sg-host.com/wp-content/uploads/2025/03/PRODUCT-D-Series-TRP.jpg");
+}
+
+.bg2{
+    background-image:url("https://antoniod154.sg-host.com/wp-content/uploads/2025/03/Rointe-Belize-touch.jpg");  
+}
+
+.bg3{
+    background-image:url("https://antoniod154.sg-host.com/wp-content/uploads/2025/03/Rointe-belize-radiator-artificial-inteligence.jpg"); 
+}
+
+.bg4{
+    background-image:url("https://antoniod154.sg-host.com/wp-content/uploads/2025/03/D-Series-5-elements-entrance-family.jpg");  
+}
+.bg5{
+    background-image:url("https://antoniod154.sg-host.com/wp-content/uploads/2025/03/PRODUCT-D-Series-screen-colours.jpg"); 
+}
+
+.flip-box-front-txt{
+    width: 100%;
+    min-height: 10%;
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    background-color: #fff;
+}
+
+.flip-box-front-txt p{
+    margin: 0 !important;
+}
+
+/* 📌 Estilos para la cara trasera */
+.flip-box-back {
+background: #2B2B2B;
+color: #fff;
+transform: translateY(100%);
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+
+}
+
+.flip-box-back h3{
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 0rem 2rem;
+}
+
+.flip-box-back p{
+    font-family: "Roboto", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0rem 2rem;
+}
+
+/* 📌 Cambio de estado cuando se activa el Flip */
+.flip-box.flipped .flip-box-front {
+transform: translateY(-100%);
+}
+
+.flip-box.flipped .flip-box-back {
+transform: translateY(0);
+}
+
+/* 📌 Flechas de navegación */
+.swiper-button-prev,
+.swiper-button-next {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+font-size: 2rem;
+color: rgb(238, 0, 0);
+z-index: 20;
+cursor: pointer;
+}
+
+/* 📌 Posicionamiento de las flechas */
+.swiper-button-prev {
+left: 1rem;
+}
+
+.swiper-button-next {
+right: 1rem;
+}
+
+/* 📌 Reducir tamaño de flechas en móviles */
+@media (max-width: 768px) {
+.swiper-button-prev,
+.swiper-button-next {
+    font-size: 1.5rem;
+}
+}
+
+/* 🔥 Asegurar que Swiper muestre las flechas por defecto */
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    font-size: 44px !important; /* Asegura que sean visibles */
+    color: white !important; /* Cambia el color si es necesario */
+    font-weight: bold;
+}
+
+/* 🔥 Alternativa: Usar un icono personalizado si sigue sin funcionar */
+.swiper-button-prev::after {
+    font-family: 'Material Icons Round';
+    content: "arrow_back_ios"; /* Icono de flecha izquierda */
+}
+
+.swiper-button-next::after {
+    font-family: 'Material Icons Round';
+    content: "arrow_forward_ios"; /* Icono de flecha derecha */
+}
+
+.lottie-container {
+    position: absolute;
+    left: 10%; /* 🔥 Ajusta la distancia del botón prev */
+    top: 20%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 80px;
+    z-index: 999;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out; /* 🔥 Agrega una animación suave */
+}
+
+/* 🔥 Ocultar Lottie cuando el mouse está sobre el slider */
+.lottie-hidden {
+    opacity: 0;
+}
+
+
+</style>
+<section class="Main">
+
+    <div class="carousel-container">
+        <!-- Swiper Carrusel -->
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+
+                <!-- Slide 1 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg1"></div>
+                                <div class="flip-box-front-txt"><p>TRUE REAL POWER</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Medidor de consumo True Real Power</h3>
+                                <p>Monitorea tu consumo en tiempo real con el medidor True Real Power de Rointe y optimiza tu ahorro energético.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg2"></div>
+                                <div class="flip-box-front-txt"><p>PANEL SUPERIOR</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Medidor de consumo True Real Power</h3>
+                                <p>Monitorea tu consumo en tiempo real con el medidor True Real Power de Rointe y optimiza tu ahorro energético.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg3"></div>
+                                <div class="flip-box-front-txt"><p>INTELIGENCIA ARTIFICIAL</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Calefacción con Inteligencia Artificial</h3>
+                                <p>Rointe presenta AIH, su sistema de inteligencia artificial, que ofrece recomendaciones personalizadas para mayor confort y ahorro energétic</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg4"></div>
+                                <div class="flip-box-front-txt"><p>INICIO ADAPTATIVO</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Modelos con panel superior o frontal</h3>
+                                <p>Descubre el confort con nuestra calefacción, disponible con panel de control superior o frontal para mayor flexibilidad y accesibilidad.</p></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 5 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg5"></div>
+                                <div class="flip-box-front-txt"><p>PERSONALIZA TU PANTALLA</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>PERSONALIZA TU PANTALLA</h3>
+                                <p>Disfruta del confort visual con la función de cambio de color de pantalla en la App Rointe Connect.</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg1"></div>
+                                <div class="flip-box-front-txt"><p>TRUE REAL POWER</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Medidor de consumo True Real Power</h3>
+                                <p>Monitorea tu consumo en tiempo real con el medidor True Real Power de Rointe y optimiza tu ahorro energético.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg2"></div>
+                                <div class="flip-box-front-txt"><p>PANEL SUPERIOR</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Medidor de consumo True Real Power</h3>
+                                <p>Monitorea tu consumo en tiempo real con el medidor True Real Power de Rointe y optimiza tu ahorro energético.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg3"></div>
+                                <div class="flip-box-front-txt"><p>INTELIGENCIA ARTIFICIAL</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Calefacción con Inteligencia Artificial</h3>
+                                <p>Rointe presenta AIH, su sistema de inteligencia artificial, que ofrece recomendaciones personalizadas para mayor confort y ahorro energétic</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg4"></div>
+                                <div class="flip-box-front-txt"><p>INICIO ADAPTATIVO</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>Modelos con panel superior o frontal</h3>
+                                <p>Descubre el confort con nuestra calefacción, disponible con panel de control superior o frontal para mayor flexibilidad y accesibilidad.</p></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 5 -->
+                <div class="swiper-slide">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <div class="flip-box-front-img bg5"></div>
+                                <div class="flip-box-front-txt"><p>PERSONALIZA TU PANTALLA</p></div>
+                            </div>
+                            <div class="flip-box-back">
+                                <h3>PERSONALIZA TU PANTALLA</h3>
+                                <p>Disfruta del confort visual con la función de cambio de color de pantalla en la App Rointe Connect.</p></div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+
+            <!-- Botones de navegación -->
+            <div class="swiper-button-prev"></div>
+            <div class="lottie-container" id="lottie-animation"></div>
+            <div class="swiper-button-next"></div>
+
+
+ 
+
+            
+        </div>
+    </div>
+
+</section>
+
+
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+    var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3.2,
+        slidesPerGroup: 1,
+        spaceBetween: 40,
+        loop: true,           
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        speed: 600,
+        breakpoints: {
+            1025: { slidesPerView: 3.2, slidesPerGroup: 1, spaceBetween: 40 },  
+            768: { slidesPerView: 2.2, slidesPerGroup: 1, spaceBetween: 30 },   
+            480: { slidesPerView: 1.2, slidesPerGroup: 1, spaceBetween: 20 }    
+        }
+    });
+
+    // ✅ Función para hacer que el Flip funcione bien al hacer clic
+    document.querySelectorAll(".flip-box").forEach(flipBox => {
+        flipBox.addEventListener("click", function () {
+            flipBox.classList.toggle("flipped");
+        });
+    });
+
+    // ✅ Verificar que el contenedor de Lottie existe antes de cargar la animación
+    var lottieContainer = document.getElementById("lottie-animation");
+    var timeoutId; // Variable para almacenar el temporizador
+
+    if (lottieContainer) {
+        console.log("✅ Lottie container encontrado, cargando animación...");
+
+        var lottieAnimation = lottie.loadAnimation({
+            container: lottieContainer,
+            renderer: "svg",
+            loop: true,
+            autoplay: true,
+            path: "https://antoniod154.sg-host.com/wp-content/uploads/click-white.json" // 🔥 Prueba con esta animación
+            
+        });
+
+        console.log("✅ Lottie cargado correctamente:", lottieAnimation);
+
+        // ✅ Eventos para ocultar y mostrar Lottie con retardo
+        var swiperContainer = document.querySelector(".swiper");
+
+        swiperContainer.addEventListener("mouseenter", function () {
+            clearTimeout(timeoutId); // 🔥 Si hay un temporizador en marcha, lo cancela
+            lottieContainer.style.opacity = "0"; // 🔥 Oculta Lottie inmediatamente
+            swiper.autoplay.stop(); // 🔥 Detiene el autoplay al hacer hover
+        });
+
+        swiperContainer.addEventListener("mouseleave", function () {
+            timeoutId = setTimeout(function () {
+                lottieContainer.style.opacity = "1"; // 🔥 Muestra Lottie después de 10s
+            }, 5000); // 5 segundos (5000ms)
+            swiper.autoplay.start(); // 🔥 Reanuda el autoplay al salir del hover
+        });
+    } else {
+        console.error("❌ No se encontró el contenedor de Lottie.");
+    }
+});
+
+
+
+</script>
+
+
+    
+</body>
+</html>
