@@ -16,15 +16,15 @@
 .carousel-container {
     width: 100%;
     
-    margin-left: auto; /* 🔥 Mueve el carrusel a la derecha */
-    position: relative;
-    overflow: hidden;
+    /*margin-left: auto; /* 🔥 Mueve el carrusel a la derecha */
+    /*position: relative;*/
+    overflow: visible;
 }
 
 /* 📌 SWIPER */
 .swiper {
-    touch-action: none;  /* Asegura que los eventos táctiles no se bloqueen */
-    -ms-touch-action: none; /* Para compatibilidad con navegadores antiguos */
+    touch-action: pan-y;  /* Permite desplazamiento vertical */
+    -ms-touch-action: pan-y; /* Para compatibilidad con navegadores antiguos */
     width: 100%;
     overflow: hidden;
 }
@@ -33,6 +33,7 @@
 .swiper-wrapper {
     display: flex;
     transition: transform 0.6s ease-in-out; /* 🔥 Animación suave */
+    touch-action: pan-y; /* Permite el desplazamiento vertical */
 }
 
 /* 📌 Ajuste de cada slide */
@@ -56,9 +57,9 @@
 }
 
 /* 📌 En móvil (1 tarjeta completa + parte de la 2ª) */
-@media (max-width: 568px) {
+@media (max-width: 600px) {
     .swiper-slide {
-        flex: 0 0 calc(100% - 10px); /* 🔥 1 completa + parte de la siguiente */
+        flex: 0 0 100% ; /* 🔥 1 completa + parte de la siguiente */
         height: 450px;
     }
 }
@@ -209,11 +210,11 @@ left: 1rem;
 right: 1rem;
 }
 
-/* 📌 Reducir tamaño de flechas en móviles */
-@media (max-width: 768px) {
+/* 📌 Ocultar flechas en móviles */
+@media (max-width: 600px) {
 .swiper-button-prev-1,
 .swiper-button-next-1 {
-    font-size: 1.5rem;
+    display: none;
 }
 }
 
@@ -408,64 +409,52 @@ right: 1rem;
                                 <p>Disfruta del confort visual con la función de cambio de color de pantalla en la App Rointe Connect.</p></div>
                         </div>
                     </div>
-                </div>
-                
-                
+                </div>  
             </div>
-
             <!-- Botones de navegación -->
             <div class="swiper-button-prev-1"></div>
             <div class="lottie-container" id="lottie-animation1"></div>
-            <div class="swiper-button-next-1"></div>
-
-
- 
-
-            
+            <div class="swiper-button-next-1"></div>  
         </div>
     </div>
-
 </section>
-
-
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-
 <script>
    document.addEventListener("DOMContentLoaded", function () {
     const sliders = document.querySelectorAll(".swiper");
 
     sliders.forEach((slider, index) => {
-        // Crear el swiper para cada slider usando clases únicas
-        const swiper = new Swiper(`.mySwiper${index + 1}`, {
-            slidesPerView: 2.2,
-            slidesPerGroup: 1,
-            spaceBetween: 40,
-            loop: true,
-            autoplay: {
-                delay: 4000,
-                disableOnInteraction: false,
-            },
-            navigation: {
-                nextEl: `.swiper-button-next-${index + 1}`,
-                prevEl: `.swiper-button-prev-${index + 1}`,
-            },
-            speed: 600,
-            touchEventsTarget: "container", // Asegura que los eventos táctiles funcionen bien
-            simulateTouch: true, // Habilita el deslizamiento táctil
-            touchRatio: 1,  // Mayor sensibilidad al deslizamiento táctil
-            grabCursor: true, // Cambia el cursor en PC a "agarrar"
-            touchStartPreventDefault: true, // Prevenir el comportamiento predeterminado en dispositivos táctiles
-            touchMoveStopPropagation: true, // Evita que se desplace la página durante el deslizamiento
-            preventClicks: true, // Evita clics adicionales durante el deslizamiento
-            watchOverflow: true, // Detiene el deslizar cuando se llega al final
-            breakpoints: {
-                1025: { slidesPerView: 3.2, slidesPerGroup: 1, spaceBetween: 40 },  
-                768: { slidesPerView: 2.1, slidesPerGroup: 1, spaceBetween: 30 },   
-                480: { slidesPerView: 1.1, slidesPerGroup: 1, spaceBetween: 20 }    
-            }
-        });
+    // Crear el swiper para cada slider usando clases únicas
+    const swiper = new Swiper(`.mySwiper${index + 1}`, {
+        slidesPerView: 1, // 1 diapositiva por vista
+        slidesPerGroup: 1, // Mueve 1 diapositiva a la vez
+        spaceBetween: 20, // Ajusta el espacio entre las diapositivas
+        loop: true, // Habilita el loop
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false, // Continúa el autoplay después de la interacción
+        },
+        navigation: {
+            nextEl: `.swiper-button-next-${index + 1}`,
+            prevEl: `.swiper-button-prev-${index + 1}`,
+        },
+        speed: 600, // Controla la velocidad de la transición
+        touchEventsTarget: "container", // Asegura que los eventos táctiles funcionen bien
+        simulateTouch: true, // Habilita el deslizamiento táctil
+        touchRatio: 2,  // Mayor sensibilidad al deslizamiento táctil
+        grabCursor: true, // Cambia el cursor en PC a "agarrar"
+        touchStartPreventDefault: true, // Prevenir el comportamiento predeterminado en dispositivos táctiles
+        touchMoveStopPropagation: true, // Evita que se desplace la página durante el deslizamiento
+        preventClicks: true, // Evita clics adicionales durante el deslizamiento
+        watchOverflow: true, // Detiene el deslizar cuando se llega al final
+        breakpoints: {
+            1025: { slidesPerView: 3.2, slidesPerGroup: 1, spaceBetween: 40 },  // Configuración para pantallas grandes
+            768: { slidesPerView: 2.1, slidesPerGroup: 1, spaceBetween: 30 },   // Para tabletas
+            600: { slidesPerView: 1, slidesPerGroup: 1, spaceBetween: 20 }    // Ajustes para móvil
+        }
+    });
 
         // ✅ Función para hacer que el Flip funcione bien al hacer clic dentro de cada slider
         document.querySelectorAll(`.mySwiper${index + 1} .flip-box`).forEach(flipBox => {
