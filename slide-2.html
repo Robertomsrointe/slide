@@ -1,3 +1,29 @@
+<!-- 
+Para agregar un nuevo slider, sigue estos pasos:
+
+1. **HTML:**
+   - Copia el código de un slider existente y pégalo en el nuevo html
+   - Cambia la clase `mySwiper1` o `mySwiper2` por `mySwiper3` (o el siguiente número).
+   - Cambia los botones de navegación de `swiper-button-prev-1` y `swiper-button-next-1` por `swiper-button-prev-3` y `swiper-button-next-3`. (o el siguiente número).
+   - Tendrás que asignar una clase única a cada archivo HTML generado. Por ejemplo, para el primer slider usa mySwiper1, para el segundo mySwiper2, y así sucesivamente.
+
+2. **JavaScript:**
+   - En el archivo de JS, en la parte que inicializa los sliders, agrega un bloque con `mySwiper3`.
+   - Asegúrate de que el índice en la clase y el ID de cada slider sea único.
+   - No olvides actualizar las funciones de flip y Lottie con los nuevos identificadores de `lottie-animation3`.
+
+3. **CSS:**
+   - En el archivo de CSS, asigna nuevos estilos para el slider 3. Cambia las clases `swiper-button-prev-1` y `swiper-button-next-1` por `swiper-button-prev-3` y `swiper-button-next-3`.
+   - Asegúrate de que los contenedores Lottie también tengan un ID único, como `lottie-animation3`.
+
+Si deseas agregar más sliders en el futuro, simplemente repite este proceso y usa números secuenciales para las clases y los identificadores.
+
+-->
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,33 +32,42 @@
     <title>Document</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
-
 </head>
-<body>
-
-    
+<body> 
 <style>
 
 .carousel-container {
     width: 100%;
-    
-    margin-left: auto; /* 🔥 Mueve el carrusel a la derecha */
-    position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* 📌 SWIPER */
 .swiper {
-    touch-action: none;  /* Asegura que los eventos táctiles no se bloqueen */
-    -ms-touch-action: none; /* Para compatibilidad con navegadores antiguos */
+    touch-action: pan-y;  /* Permite desplazamiento vertical */
+    -ms-touch-action: pan-y; /* Para compatibilidad con navegadores antiguos */
     width: 100%;
     overflow: hidden;
 }
+
+/* Este es el CSS que afecta al segundo carrusel */
+.mySwiper2 .swiper-wrapper {
+    pointer-events: none;  /* Desactiva los eventos en el contenedor del swiper */
+}
+
+.mySwiper2 .swiper-slide {
+    pointer-events: auto;  /* Reactiva los eventos solo para las diapositivas (tarjetas) */
+}
+
+.mySwiper2 .flip-box {
+    pointer-events: auto;  /* Asegura que las tarjetas sean clickeables */
+}
+
 
 /* 📌 Ajusta el Swiper Wrapper */
 .swiper-wrapper {
     display: flex;
     transition: transform 0.6s ease-in-out; /* 🔥 Animación suave */
+    touch-action: pan-y; /* Permite el desplazamiento vertical */
 }
 
 /* 📌 Ajuste de cada slide */
@@ -58,11 +93,10 @@
 /* 📌 En móvil (1 tarjeta completa + parte de la 2ª) */
 @media (max-width: 568px) {
     .swiper-slide {
-        flex: 0 0 calc(100% - 10px); /* 🔥 1 completa + parte de la siguiente */
+        flex: 0 0 100% ; /* 🔥 1 completa + parte de la siguiente */
         height: 450px;
     }
 }
-
 
 /* 📌 FLIP BOX */
 .flip-box {
@@ -216,11 +250,11 @@ left: 1rem;
 right: 1rem;
 }
 
-/* 📌 Reducir tamaño de flechas en móviles */
-@media (max-width: 768px) {
+/* 📌 Ocultar flechas en móviles */
+@media (max-width: 600px) {
 .swiper-button-prev-2,
 .swiper-button-next-2 {
-    font-size: 1.5rem;
+    display: none;
 }
 }
 
@@ -245,14 +279,12 @@ right: 1rem;
 
 .lottie-container {
     position: absolute;
-     /* 🔥 Ajusta la distancia del botón prev */
-    top: 10%;
-    transform: translateY(-50%);
-    width: 180px;
-    height: 180px;
+    top: -1%;
+    width: 110px;
+    height: 110px;
     z-index: 999;
     pointer-events: none;
-    transition: opacity 0.3s ease-in-out; /* 🔥 Agrega una animación suave */
+    transition: opacity 0.3s ease-in-out;
 }
 
 /* 🔥 Ocultar Lottie cuando el mouse está sobre el slider */
@@ -475,26 +507,16 @@ right: 1rem;
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                
+                </div>  
             </div>
-
-            <!-- Botones de navegación -->
+            <!-- Botones de navegación  -->
             <div class="swiper-button-prev-2"></div>
-            <div class="lottie-container" id="lottie-animation2"></div>
+            <!--<div class="lottie-container" id="lottie-animation2"></div>  -->
             <div class="swiper-button-next-2"></div>
-
-
- 
-
-            
         </div>
     </div>
 
 </section>
-
-
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
@@ -510,7 +532,7 @@ right: 1rem;
             spaceBetween: 40,
             loop: true,
             autoplay: {
-                delay: 4000,
+                delay: 6000,
                 disableOnInteraction: false,
             },
             navigation: {
@@ -573,10 +595,7 @@ right: 1rem;
 
 
 
-
-</script>
-
-
-    
+</script> 
 </body>
 </html>
+
